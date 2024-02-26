@@ -17,7 +17,6 @@ public partial class MilesCarRentalContext : DbContext
     }
 
     public DbSet<Car> Cars { get; set; }
-    public DbSet<Loan> Loans { get; set; }
     public DbSet<Location> Locations {  get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
