@@ -1,9 +1,8 @@
-using API.Data;
 using API.Interfaces;
-using API.Models;
-using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using MediatR;
+using API.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,10 +12,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<ISearchCar, SearchCarService>();
 
 builder.Services.AddDbContext<MilesCarRentalContext>(options =>
                  options.UseMySql(builder.Configuration.GetConnectionString("conexion"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.35-mysql")));
+
+builder.Services.AddMediatR(typeof(Program).Assembly);
 
 var app = builder.Build();
 

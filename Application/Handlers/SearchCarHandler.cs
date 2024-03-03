@@ -1,27 +1,28 @@
-﻿using API.Data;
-using API.DTO;
-using API.Interfaces;
-using API.Models;
+﻿using API.Application.DTO;
+using API.Domain;
+using API.Infrastructure;
+using API.Infrastructure.Queries;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Services
+namespace API.Application.Handlers
 {
-    public class SearchCarService : ISearchCar
+    public class SearchCarHandler : IRequestHandler<SearchCarQuery, PetitionResponse>
     {
-        private readonly MilesCarRentalContext _context;
 
-        public SearchCarService(MilesCarRentalContext context)
+        readonly MilesCarRentalContext _context;
+        public SearchCarHandler(MilesCarRentalContext context)
         {
             _context = context;
         }
-
-        public async Task<PetitionResponse> FindCarByParameters(FindCarByParametersDTO findCarByParametersDTO)
+        public async Task<PetitionResponse> Handle(SearchCarQuery request, CancellationToken cancellationToken)
         {
-            Location locationforLoan = await _context.Locations.Where(x => x.Name == findCarByParametersDTO.OriginName).FirstOrDefaultAsync();
+            FindCarByParametersDTO findCarByParametersDTO = request.FindCarByParametersDTO;
+            Location locationforLoan = await _context.Locations.Where(x => x.Name == findCarByParametersDTO.OriginName).FirstOrDefaultAsync(cancellationToken);
             if (!locationforLoan.Equals(null))
             {
-                List<Car> CarsAvailable =  await _context.Cars.Where(x=> x.LocationId == locationforLoan.Id && x.State == true).ToListAsync();
-                if(CarsAvailable.Count > 0)
+                List<Car> CarsAvailable = await _context.Cars.Where(x => x.LocationId == locationforLoan.Id && x.State == true).ToListAsync();
+                if (CarsAvailable.Count > 0)
                 {
                     return new PetitionResponse
                     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using API.Models;
+using API.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data;
+namespace API.Infrastructure;
 
 public partial class MilesCarRentalContext : DbContext
 {
@@ -17,8 +17,8 @@ public partial class MilesCarRentalContext : DbContext
     }
 
     public DbSet<Car> Cars { get; set; }
-    public DbSet<Location> Locations {  get; set; }
-    
+    public DbSet<Location> Locations { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder

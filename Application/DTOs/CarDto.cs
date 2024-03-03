@@ -1,10 +1,10 @@
-﻿namespace API.Models
+﻿namespace API.Application.DTOs
 {
-    public class Car
+    public class CarDto
     {
         public int Id { get; set; }
         public string Brand { get; set; }
-        public int Model {  get; set; }
+        public int Model { get; set; }
         public bool State { get; set; }
         public string Type { get; set; }
         public string Color { get; set; }

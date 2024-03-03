@@ -1,4 +1,4 @@
-﻿namespace API.Models
+﻿namespace API.Domain
 {
     public class Location
     {

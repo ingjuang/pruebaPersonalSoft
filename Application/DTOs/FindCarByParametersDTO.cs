@@ -1,4 +1,4 @@
-﻿namespace API.DTO
+﻿namespace API.Application.DTO
 {
     public class FindCarByParametersDTO
     {
